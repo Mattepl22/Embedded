@@ -17,6 +17,7 @@ volatile UART_Regs *myUART = (volatile UART_Regs *)0x3FF40000;
 
 void IRAM_ATTR onTimer();
 void myPutChar(char c);
+void myPrint(const char *str);
 
 void setup() {
   Serial.begin(115200);
@@ -42,9 +43,24 @@ void loop() {
 }
 
 void myPutChar(char c) {
+
+  //Controllo se c'è spazio
+  //Estraggo il TX_FIFO_COUNT (bit da 16 a 23)
+  //Shift a dx di 16 (16-23 si trovano in 0-7) e maschera (11111111) per pulire sporcizia a sx
+  while (((myUART->status >> 16) & 0xFF) >= 126) {
+
+  }
   myUART->fifo = c;
 }
 
+void myPrint(const char *str) {
+
+  while(*str != '\0') {
+    myPutChar(*str);
+    str++;
+  }
+}
+
 void IRAM_ATTR onTimer() {
-  myPutChar('A');
+  myPrint("System Status: OK");
 }
