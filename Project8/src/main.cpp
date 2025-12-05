@@ -1,4 +1,5 @@
 #include "mygpio.h"
+#include "myuart.h"
 
 //Definisco INPUT/OUTPUT
 #define PIN_LED 2
@@ -34,7 +35,7 @@ void loop() {
 }
 
 void IRAM_ATTR onTimer() {
-  char c = serialRead();
+  char c = uartRead();
 
   if (c == '1') {
     dWrite(PIN_LED, true);
