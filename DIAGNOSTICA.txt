@@ -1,0 +1,3 @@
+--- DIAGNOSTICA ---
+Chip Model: ESP32-D0WD-V3
+Core Version: v4.4.7-dirty
